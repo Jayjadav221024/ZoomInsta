@@ -40,7 +40,7 @@ const Saved = () => {
   async function removeSaved(item) {
     try {
       const response = await axios.post(
-        "http://localhost:3000/food/save",
+        "https://zoominsta-1.onrender.com/food/save",
         { foodId: item._id },
         { withCredentials: true }
       );

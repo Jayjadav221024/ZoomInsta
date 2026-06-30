@@ -30,7 +30,7 @@ const Home = () => {
   async function handlelike(item) {
     try {
       const response = await axios.post(
-        "http://localhost:3000/food/like",
+        "https://zoominsta-1.onrender.com/food/like",
         { foodId: item._id },
         { withCredentials: true }
       );
@@ -67,7 +67,7 @@ const Home = () => {
   async function saveVideo(item) {
     try {
       const response = await axios.post(
-        "http://localhost:3000/food/save",
+        "https://zoominsta-1.onrender.com/food/save",
         { foodId: item._id },
         { withCredentials: true }
       );
