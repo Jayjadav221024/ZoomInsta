@@ -13,7 +13,7 @@ app.use(cookieparser());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({
-  origin: ["http://localhost:5173", "http://localhost:4000", "http://localhost:5000"],
+  origin: ["http://localhost:5173", "http://localhost:4000", "http://localhost:5000","https://zoominsta-2.onrender.com"],
   credentials: true,
 }));
 
