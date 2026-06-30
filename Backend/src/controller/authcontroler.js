@@ -4,18 +4,24 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const foodpartnermodel = require("../models/foodpartner");
 
-//Register user
+const cookieOptions = {
+  httpOnly: true,
+  secure: true,
+  sameSite: "none",
+};
+
+// Register user
 async function registeruser(req, res) {
   const { FullName, Email, Password } = req.body;
 
-  const isuseralredy = await usermodel.findOne({
-    Email,
-  });
+  const isuseralredy = await usermodel.findOne({ Email });
+
   if (isuseralredy) {
     return res.status(400).json({
       meassage: "user already exsists",
     });
   }
+
   const hashpass = await bcrypt.hash(Password, 10);
 
   const user = await usermodel.create({
@@ -28,44 +34,51 @@ async function registeruser(req, res) {
     {
       id: user._id,
     },
-    process.env.JWT_SECRET,);
-  res.cookie("token", token);
+    process.env.JWT_SECRET
+  );
+
+  res.cookie("token", token, cookieOptions);
+
   res.status(201).json({
     meassage: "User Sucessfull Created",
     user: {
       _id: user._id,
-      FullName:user.FullName,
+      FullName: user.FullName,
       Email: user.Email,
       Password: user.Password,
     },
   });
 }
 
-//Login user
+// Login user
 async function loginuser(req, res) {
   const { Email, Password } = req.body;
-  const user = await usermodel.findOne({
-    Email,
-  });
+
+  const user = await usermodel.findOne({ Email });
+
   if (!user) {
-    res.status(404).json({
+    return res.status(404).json({
       message: "invalid email or password",
     });
   }
+
   const ispassword = await bcrypt.compare(Password, user.Password);
+
   if (!ispassword) {
-    res.status(404).json({
+    return res.status(404).json({
       message: "invalid email or password",
     });
   }
+
   const token = jwt.sign(
     {
       id: user._id,
     },
-    process.env.JWT_SECRET,
+    process.env.JWT_SECRET
   );
 
-  res.cookie("token", token);
+  res.cookie("token", token, cookieOptions);
+
   res.status(200).json({
     message: "user login sucessfully",
     user: {
@@ -74,26 +87,27 @@ async function loginuser(req, res) {
   });
 }
 
-//logout user
+// Logout user
 async function logoutuser(req, res) {
-  res.clearCookie("token");
+  res.clearCookie("token", cookieOptions);
+
   res.status(200).json({
     message: "user logged out",
   });
 }
 
-//Register Foodparnter
+// Register Foodpartner
 async function regiterfoodpartner(req, res) {
   const { Name, Email, Password, phone, address, Contactname } = req.body;
 
-  const isregitserfoodparnter = await foodpartnermodel.findOne({
-    Email,
-  });
+  const isregitserfoodparnter = await foodpartnermodel.findOne({ Email });
+
   if (isregitserfoodparnter) {
     return res.status(400).json({
       meassage: "Foodpartner already exsists",
     });
   }
+
   const hashpass = await bcrypt.hash(Password, 10);
 
   const user = await foodpartnermodel.create({
@@ -102,16 +116,18 @@ async function regiterfoodpartner(req, res) {
     Password: hashpass,
     phone,
     address,
-    Contactname
+    Contactname,
   });
 
   const token = jwt.sign(
     {
       id: user._id,
     },
-    process.env.JWT_SECRET,
+    process.env.JWT_SECRET
   );
-  res.cookie("token", token);
+
+  res.cookie("token", token, cookieOptions);
+
   res.status(201).json({
     meassage: "Foodpartner Sucessfull Created",
     user: {
@@ -122,43 +138,48 @@ async function regiterfoodpartner(req, res) {
   });
 }
 
-
-//login Foodpartner
+// Login Foodpartner
 async function loginfoodpartner(req, res) {
   const { Email, Password } = req.body;
-  const user = await foodpartnermodel.findOne({
-    Email,
-  });
+
+  const user = await foodpartnermodel.findOne({ Email });
+
   if (!user) {
-    res.status(404).json({
+    return res.status(404).json({
       message: "invalid email or password",
     });
   }
+
   const ispassword = await bcrypt.compare(Password, user.Password);
+
   if (!ispassword) {
-    res.status(404).json({
+    return res.status(404).json({
       message: "invalid email or password",
     });
   }
+
   const token = jwt.sign(
     {
       id: user._id,
     },
-    process.env.JWT_SECRET,
+    process.env.JWT_SECRET
   );
 
-  res.cookie("token", token);
+  res.cookie("token", token, cookieOptions);
+
   res.status(200).json({
     message: "Foodpartner login sucessfully",
     user: {
+      _id: user._id,
       Email: user.Email,
     },
   });
 }
 
-//logout Foodpartner
- function logoutfoodpartner(req, res) {
-  res.clearCookie("token");
+// Logout Foodpartner
+function logoutfoodpartner(req, res) {
+  res.clearCookie("token", cookieOptions);
+
   res.status(200).json({
     message: "Foodpartner logged out",
   });
@@ -170,5 +191,6 @@ module.exports = {
   logoutuser,
   regiterfoodpartner,
   loginfoodpartner,
-  logoutfoodpartner
+  logoutfoodpartner,
 };
+
