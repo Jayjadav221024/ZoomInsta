@@ -12,7 +12,7 @@ const UserRegister = () => {
     const email = e.target.Email.value;
     const password = e.target.Password.value;
     console.log(Fullname, email, password);
-    const response = await axios.post("http://localhost:3000/auth/register", {
+    const response = await axios.post("https://zoominsta-1.onrender.com/auth/register", {
       FullName: Fullname,
       Email: email,
       Password: password,

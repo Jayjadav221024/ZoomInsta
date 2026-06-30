@@ -15,7 +15,7 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/food", {
+      .get("https://zoominsta-1.onrender.com/food", {
         withCredentials: true,
       })
       .then((response) => {

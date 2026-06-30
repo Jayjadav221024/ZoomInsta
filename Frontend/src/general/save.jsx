@@ -15,7 +15,7 @@ const Saved = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/food/save", {
+      .get("https://zoominsta-1.onrender.com/food/save", {
         withCredentials: true,
       })
       .then((response) => {

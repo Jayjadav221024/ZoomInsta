@@ -26,7 +26,7 @@ const Profile = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/foodpartner/${id}`, {
+      .get(`https://zoominsta-1.onrender.com/foodpartner/${id}`, {
         withCredentials: true,
       })
       .then((response) => {

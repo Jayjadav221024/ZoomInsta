@@ -11,7 +11,7 @@ const Userlogin = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
     // console.log(email, password);
-    const response = await axios.post("http://localhost:3000/auth/login", {
+    const response = await axios.post("https://zoominsta-1.onrender.com/auth/login", {
       Email: email,
       Password: password,
     },{

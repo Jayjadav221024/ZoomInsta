@@ -68,7 +68,7 @@ const CreateFood = () => {
     formData.append("description", description);
     formData.append("video", videoFile);
 
-    const response = await axios.post("http://localhost:3000/food", formData, {
+    const response = await axios.post("https://zoominsta-1.onrender.com/food", formData, {
       withCredentials: true,
     });
 

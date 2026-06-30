@@ -15,7 +15,7 @@ const FoodRegister = () => {
     const password = e.target.password.value;
     console.log(businessname, email, password);
   
-    const response = await axios.post("http://localhost:3000/auth/Registerfoodpartner", {
+    const response = await axios.post("https://zoominsta-1.onrender.com/auth/Registerfoodpartner", {
       // Name: businessname,
       Email: email,
       Contactname: businessname,
